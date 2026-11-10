@@ -1,0 +1,159 @@
+.cta {
+  position: relative;
+  overflow: hidden;
+  padding-block: calc(var(--section-y) * 1.25);
+}
+
+.cta__glow {
+  position: absolute;
+  left: 50%;
+  bottom: -55%;
+  translate: -50% 0;
+  width: min(120vw, 1100px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.075),
+    rgba(255, 255, 255, 0.02) 42%,
+    transparent 66%
+  );
+  pointer-events: none;
+}
+
+.cta__inner {
+  position: relative;
+  display: grid;
+  gap: var(--s-6);
+}
+
+.cta__eyebrow {
+  color: var(--ink-muted);
+}
+
+.cta__eyebrow .mono {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+
+.cta__pip {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--signal);
+  animation: pip 2.6s ease-in-out infinite;
+}
+
+.cta__title {
+  font-size: clamp(2.5rem, 0.9rem + 5.9vw, 6.5rem);
+  line-height: 0.94;
+  letter-spacing: -0.048em;
+  font-weight: 500;
+  text-transform: uppercase;
+  max-width: 19ch;
+}
+
+.cta__title .line-mask > span {
+  padding-bottom: 0.06em;
+}
+
+.cta__actions {
+  display: grid;
+  gap: var(--s-5);
+  padding-top: var(--s-4);
+}
+
+.cta__mail {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  justify-self: start;
+  font-size: clamp(1.25rem, 0.9rem + 1.6vw, 2rem);
+  letter-spacing: -0.03em;
+  padding-bottom: var(--s-2);
+  color: var(--ink);
+}
+
+.cta__mail-text {
+  position: relative;
+}
+
+/* Underline wipes out to the right, then back in from the left. */
+.cta__mail-text::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform-origin: right;
+  transition: transform 520ms var(--ease);
+}
+
+.cta__mail:hover .cta__mail-text::after,
+.cta__mail:focus-visible .cta__mail-text::after {
+  transform: scaleX(0);
+}
+
+.cta__mail svg {
+  transition: transform var(--dur) var(--ease);
+}
+
+.cta__mail:hover svg,
+.cta__mail:focus-visible svg {
+  transform: translate(3px, -3px);
+}
+
+.cta__note {
+  color: var(--ink-muted);
+  font-size: var(--t-small);
+  line-height: 1.6;
+  max-width: 42ch;
+}
+
+@media (min-width: 900px) {
+  .cta__actions {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: end;
+    gap: var(--s-7);
+  }
+
+  .cta__note {
+    justify-self: end;
+    padding-bottom: var(--s-2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta__pip {
+    animation: none;
+  }
+
+  .cta__mail:hover svg,
+  .cta__mail:focus-visible svg {
+    transform: none;
+  }
+}
+
+/* Primary route CTA sits above the mailto fallback. */
+.cta__primary {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-5);
+}
+
+.cta__book {
+  padding: 0.95rem 1.6rem;
+}
+
+@media (min-width: 560px) {
+  .cta__primary {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--s-6);
+    flex-wrap: wrap;
+  }
+}

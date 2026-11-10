@@ -1,0 +1,158 @@
+.footer {
+  border-top: 1px solid var(--rule);
+  padding-top: var(--s-8);
+}
+
+.footer__inner {
+  display: grid;
+  gap: var(--s-7);
+  padding-bottom: var(--s-8);
+}
+
+.footer__wordmark {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: clamp(2rem, 1.1rem + 4.2vw, 4rem);
+  letter-spacing: 0.02em;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.footer__descriptor {
+  color: var(--ink-faint);
+  font-size: var(--t-small);
+  margin-top: var(--s-3);
+}
+
+.footer__col-title {
+  color: var(--ink-faint);
+  margin-bottom: var(--s-4);
+  font-size: var(--t-micro);
+  font-weight: 400;
+  letter-spacing: 0.14em;
+}
+
+.footer__col ul {
+  display: grid;
+  gap: var(--s-2);
+}
+
+.footer__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  color: var(--ink-muted);
+  font-size: var(--t-small);
+  padding-block: 2px;
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.footer__link svg {
+  color: var(--ink-ghost);
+  transition: transform var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+.footer__link:hover,
+.footer__link:focus-visible {
+  color: var(--ink);
+}
+
+.footer__link:hover svg,
+.footer__link:focus-visible svg {
+  transform: translate(2px, -2px);
+  color: var(--ink);
+}
+
+.footer__mail {
+  font-size: var(--t-body);
+  color: var(--ink);
+  border-bottom: 1px solid var(--rule-strong);
+  padding-bottom: 2px;
+  transition: border-color var(--dur) var(--ease);
+}
+
+.footer__mail:hover,
+.footer__mail:focus-visible {
+  border-color: var(--ink);
+}
+
+.footer__where {
+  color: var(--ink-faint);
+  margin-top: var(--s-4);
+}
+
+/* ---- Bottom bar -------------------------------------------- */
+.footer__bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3) var(--s-5);
+  justify-content: space-between;
+  align-items: center;
+  padding-block: var(--s-5);
+  border-top: 1px solid var(--rule-faint);
+  color: var(--ink-faint);
+}
+
+.footer__colophon {
+  display: none;
+}
+
+.footer__top {
+  color: var(--ink-muted);
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.footer__top:hover,
+.footer__top:focus-visible {
+  color: var(--ink);
+}
+
+@media (min-width: 720px) {
+  .footer__inner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s-8) var(--s-6);
+  }
+
+  .footer__brand {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 1000px) {
+  .footer {
+    padding-top: var(--s-9);
+  }
+
+  .footer__inner {
+    grid-template-columns: minmax(0, 5fr) repeat(3, minmax(0, 2fr));
+    align-items: start;
+    gap: var(--s-6);
+    padding-bottom: var(--s-9);
+  }
+
+  .footer__brand {
+    grid-column: auto;
+  }
+
+  .footer__colophon {
+    display: block;
+  }
+}
+
+/* .footer__link is inline-flex, which would sit this on the same line as
+   the email address. It needs its own row. */
+.footer__demo {
+  display: flex;
+  width: fit-content;
+  margin-top: var(--s-3);
+  color: var(--ink);
+}
+
+.footer__demo svg {
+  color: var(--ink-faint);
+}
+
+/* Back-to-top is a button now that "#top" is not a route-safe target. */
+.footer__top {
+  cursor: pointer;
+}

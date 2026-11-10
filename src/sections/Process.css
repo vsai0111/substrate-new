@@ -1,0 +1,163 @@
+.process__track {
+  position: relative;
+  display: grid;
+  gap: 0;
+}
+
+/* The rail: vertical on mobile, horizontal from 900px up. */
+.process__track::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--rule);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 1200ms var(--ease);
+}
+
+.process__track.is-in::before {
+  transform: scaleY(1);
+}
+
+.process__step {
+  position: relative;
+  padding: 0 0 var(--s-6) var(--s-6);
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 620ms var(--ease),
+    transform 620ms var(--ease);
+  transition-delay: calc(var(--i) * 90ms + 220ms);
+}
+
+.process__track.is-in .process__step {
+  opacity: 1;
+  transform: none;
+}
+
+.process__step:last-child {
+  padding-bottom: 0;
+}
+
+.process__node {
+  position: absolute;
+  left: 0;
+  top: 0.45em;
+  width: 11px;
+  height: 11px;
+  border: 1px solid var(--rule-strong);
+  background: var(--ground);
+  transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+
+.process__step:hover .process__node {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.process__id {
+  display: block;
+  color: var(--ink-faint);
+  margin-bottom: var(--s-2);
+}
+
+.process__name {
+  font-size: var(--t-h3);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: var(--s-2);
+}
+
+.process__note {
+  color: var(--ink-muted);
+  font-size: var(--t-small);
+  line-height: 1.55;
+  max-width: 44ch;
+}
+
+@media (min-width: 900px) {
+  .process__track {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 0;
+    padding-top: var(--s-6);
+  }
+
+  .process__track::before {
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: auto;
+    width: auto;
+    height: 1px;
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  .process__track.is-in::before {
+    transform: scaleX(1);
+  }
+
+  .process__step {
+    padding: 0 var(--s-5) 0 0;
+  }
+
+  .process__node {
+    left: 0;
+    top: calc(var(--s-6) * -1 - 5px);
+  }
+
+  .process__step:hover .process__name {
+    color: var(--ink);
+  }
+
+  .process__name {
+    color: var(--ink);
+  }
+
+  .process__note {
+    max-width: none;
+    opacity: 0.75;
+    transition: opacity var(--dur) var(--ease);
+  }
+
+  .process__step:hover .process__note {
+    opacity: 1;
+  }
+}
+
+/* Two rows of three: the single top rail no longer describes the layout,
+   so each step carries its own rule and node. */
+@media (min-width: 900px) and (max-width: 1180px) {
+  .process__track {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    row-gap: var(--s-8);
+    padding-top: 0;
+  }
+
+  .process__track::before {
+    display: none;
+  }
+
+  .process__step {
+    padding-top: var(--s-6);
+    border-top: 1px solid var(--rule);
+  }
+
+  .process__node {
+    top: -6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .process__step {
+    opacity: 1;
+    transform: none;
+  }
+
+  .process__track::before {
+    transform: none;
+  }
+}

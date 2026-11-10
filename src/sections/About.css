@@ -1,0 +1,136 @@
+.about__grid {
+  display: grid;
+  gap: var(--s-7);
+}
+
+.about__title {
+  font-size: var(--t-h1);
+  line-height: 1.02;
+  letter-spacing: -0.042em;
+  font-weight: 500;
+}
+
+.about__title .line-mask > span {
+  padding-bottom: 0.05em;
+}
+
+.about__body {
+  display: grid;
+  gap: var(--s-5);
+}
+
+.about__para {
+  color: var(--ink-muted);
+  max-width: 54ch;
+}
+
+.about__para:first-child {
+  color: var(--ink);
+  font-size: var(--t-lead);
+  line-height: 1.5;
+  letter-spacing: -0.011em;
+}
+
+.about__pillars {
+  display: grid;
+  gap: var(--s-3);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--rule-faint);
+}
+
+.about__pillars-label {
+  color: var(--ink-faint);
+}
+
+.about__pillars ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-4);
+}
+
+.about__pillars li {
+  position: relative;
+  padding-right: var(--s-4);
+  color: var(--ink);
+  font-size: var(--t-small);
+}
+
+.about__pillars li:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 4px;
+  height: 1px;
+  background: var(--ink-ghost);
+}
+
+/* ---- Stats ------------------------------------------------- */
+.about__stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: var(--s-8);
+  border-top: 1px solid var(--rule);
+}
+
+.about__stat {
+  display: grid;
+  gap: var(--s-2);
+  padding: var(--s-5) 0 var(--s-5) 0;
+  border-bottom: 1px solid var(--rule-faint);
+}
+
+.about__stat:nth-child(odd) {
+  padding-right: var(--s-4);
+  border-right: 1px solid var(--rule-faint);
+}
+
+.about__stat:nth-child(even) {
+  padding-left: var(--s-4);
+}
+
+.about__stat-value {
+  font-size: clamp(2.25rem, 1.4rem + 3vw, 3.5rem);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  font-weight: 500;
+}
+
+.about__stat-key {
+  color: var(--ink-faint);
+}
+
+@media (min-width: 900px) {
+  .about__grid {
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    gap: var(--s-9);
+    align-items: start;
+  }
+
+  .about__stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border-bottom: 1px solid var(--rule-faint);
+  }
+
+  .about__stat {
+    padding: var(--s-6) var(--s-5);
+    border-bottom: 0;
+    border-right: 1px solid var(--rule-faint);
+  }
+
+  .about__stat:first-child {
+    padding-left: 0;
+  }
+
+  .about__stat:last-child {
+    border-right: 0;
+  }
+
+  .about__stat:nth-child(odd) {
+    padding-right: var(--s-5);
+  }
+
+  .about__stat:nth-child(even) {
+    padding-left: var(--s-5);
+  }
+}

@@ -1,0 +1,339 @@
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: flex-end;
+  padding-top: calc(var(--nav-h) + var(--s-8));
+  padding-bottom: var(--s-7);
+  overflow: hidden;
+}
+
+.hero__inner {
+  position: relative;
+  width: 100%;
+  display: grid;
+  gap: var(--s-6);
+}
+
+/* ---- Ambient field ----------------------------------------- */
+.hero__field {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hero__rule {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--rule-faint);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 1400ms var(--ease);
+}
+
+.hero.is-in .hero__rule {
+  transform: scaleY(1);
+}
+
+.hero__rule--1 {
+  left: 22%;
+  transition-delay: 260ms;
+}
+
+.hero__rule--2 {
+  left: 55%;
+  transition-delay: 380ms;
+}
+
+.hero__rule--3 {
+  left: 79%;
+  transition-delay: 500ms;
+}
+
+.hero__orb {
+  position: absolute;
+  top: -18%;
+  right: -12%;
+  width: min(62vw, 640px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 38% 34%,
+    rgba(255, 255, 255, 0.085),
+    rgba(255, 255, 255, 0.02) 46%,
+    transparent 68%
+  );
+  opacity: 0;
+  transition: opacity 1800ms var(--ease);
+  animation: heroDrift 26s var(--ease-io) infinite alternate;
+}
+
+.hero.is-in .hero__orb {
+  opacity: 1;
+}
+
+@keyframes heroDrift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(-4%, 5%, 0) scale(1.09);
+  }
+}
+
+/* ---- Eyebrow ----------------------------------------------- */
+.hero__eyebrow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-3);
+  color: var(--ink-muted);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 700ms var(--ease), transform 700ms var(--ease);
+}
+
+.hero.is-in .hero__eyebrow {
+  opacity: 1;
+  transform: none;
+}
+
+.hero__pip {
+  flex-shrink: 0;
+  margin-top: 0.5em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ink);
+  animation: pip 2.6s ease-in-out infinite;
+}
+
+/* ---- Display type ------------------------------------------ */
+.hero__title {
+  font-size: var(--t-display);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  font-weight: 500;
+  text-transform: uppercase;
+  max-width: 15ch;
+}
+
+.hero__title .line-mask > span {
+  padding-bottom: 0.06em;
+}
+
+/* ---- Statement + actions ----------------------------------- */
+.hero__body {
+  display: grid;
+  gap: var(--s-5);
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 800ms var(--ease) 620ms, transform 800ms var(--ease) 620ms;
+}
+
+.hero.is-in .hero__body {
+  opacity: 1;
+  transform: none;
+}
+
+.hero__statement {
+  color: var(--ink-muted);
+  font-size: var(--t-lead);
+  line-height: 1.5;
+  letter-spacing: -0.011em;
+  max-width: 54ch;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-4);
+}
+
+/* Shared editorial button — underline that wipes on hover. */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: 0.7rem 1.15rem;
+  border: 1px solid var(--rule-strong);
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+  overflow: hidden;
+  transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+
+.btn > span:first-child {
+  position: relative;
+  z-index: 1;
+}
+
+.btn__line {
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  transform: translateY(101%);
+  transition: transform var(--dur) var(--ease);
+}
+
+.btn:hover,
+.btn:focus-visible {
+  color: var(--ground);
+  border-color: var(--ink);
+}
+
+.btn:hover .btn__line,
+.btn:focus-visible .btn__line {
+  transform: translateY(0);
+}
+
+.btn--ghost {
+  border-color: var(--rule);
+  color: var(--ink-muted);
+}
+
+.btn--ghost:hover,
+.btn--ghost:focus-visible {
+  color: var(--ground);
+}
+
+/* ---- Meta strip -------------------------------------------- */
+.hero__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-5);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--rule);
+  opacity: 0;
+  transition: opacity 800ms var(--ease) 780ms;
+}
+
+.hero.is-in .hero__foot {
+  opacity: 1;
+}
+
+.hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-4) var(--s-7);
+}
+
+.hero__meta-item {
+  display: flex;
+  gap: var(--s-3);
+  align-items: baseline;
+}
+
+.hero__meta-item dt {
+  color: var(--ink-faint);
+}
+
+.hero__meta-item dd {
+  color: var(--ink);
+}
+
+.hero__scroll {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .hero__inner {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    grid-template-areas:
+      'eyebrow eyebrow'
+      'title title'
+      '. body'
+      'foot foot';
+    align-items: end;
+    gap: var(--s-6) var(--s-6);
+  }
+
+  .hero__eyebrow {
+    grid-area: eyebrow;
+  }
+
+  .hero__title {
+    grid-area: title;
+    max-width: none;
+  }
+
+  .hero__body {
+    grid-area: body;
+    justify-self: end;
+    padding-bottom: 0.35rem;
+  }
+
+  .hero__foot {
+    grid-area: foot;
+  }
+
+  .hero__scroll {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    color: var(--ink-faint);
+    transition: color var(--dur-fast) var(--ease);
+  }
+
+  .hero__scroll:hover,
+  .hero__scroll:focus-visible {
+    color: var(--ink);
+  }
+
+  .hero__scroll svg {
+    animation: nudge 2.4s var(--ease-io) infinite;
+  }
+
+  @keyframes nudge {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(4px);
+    }
+  }
+}
+
+@media (max-width: 899px) {
+  .hero {
+    min-height: auto;
+    padding-top: calc(var(--nav-h) + var(--s-9));
+    padding-bottom: var(--s-9);
+  }
+
+  .hero__title {
+    letter-spacing: -0.035em;
+  }
+
+  .hero__rule--3 {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__orb {
+    animation: none;
+  }
+
+  .hero__pip {
+    animation: none;
+  }
+
+  .hero__rule {
+    transform: scaleY(1);
+  }
+
+  .hero__eyebrow,
+  .hero__body,
+  .hero__foot {
+    opacity: 1;
+    transform: none;
+  }
+}

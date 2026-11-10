@@ -1,0 +1,170 @@
+.experiments__ticker {
+  padding-block: var(--s-5);
+  border-block: 1px solid var(--rule-faint);
+  margin-bottom: var(--section-y);
+}
+
+.experiments__body {
+  display: grid;
+  gap: var(--s-7);
+}
+
+/* ---- Word stack -------------------------------------------- */
+.experiments__item + .experiments__item {
+  border-top: 1px solid var(--rule-faint);
+}
+
+.experiments__word {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-4);
+  width: 100%;
+  padding-block: var(--s-3);
+  text-align: left;
+}
+
+.experiments__index {
+  color: var(--ink-faint);
+  flex-shrink: 0;
+  transition: color var(--dur) var(--ease);
+}
+
+.experiments__label {
+  position: relative;
+  font-size: clamp(2rem, 1rem + 5.6vw, 4.75rem);
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+  font-weight: 500;
+  /* Hollow by default; the active word fills in. */
+  color: transparent;
+  -webkit-text-stroke: 1px var(--ink-faint);
+  transition: -webkit-text-stroke-color var(--dur) var(--ease);
+}
+
+/* The solid overlay wipes in from the left rather than cross-fading. */
+.experiments__label::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  color: var(--ink);
+  -webkit-text-stroke: 0;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 620ms var(--ease);
+}
+
+.experiments__word:hover .experiments__label,
+.experiments__word:focus-visible .experiments__label,
+.experiments__word.is-active .experiments__label {
+  -webkit-text-stroke-color: var(--ink-muted);
+}
+
+.experiments__word.is-active .experiments__label::after,
+.experiments__word:hover .experiments__label::after,
+.experiments__word:focus-visible .experiments__label::after {
+  clip-path: inset(0 0 0 0);
+}
+
+.experiments__word.is-active .experiments__index {
+  color: var(--ink);
+}
+
+/* ---- Inline note (narrow screens only) --------------------- */
+.experiments__inline {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--dur-slow) var(--ease);
+}
+
+.experiments__inline.is-active {
+  grid-template-rows: 1fr;
+}
+
+.experiments__inline > p {
+  overflow: hidden;
+  min-height: 0;
+  color: var(--ink-muted);
+  font-size: var(--t-small);
+  line-height: 1.55;
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease);
+}
+
+.experiments__inline.is-active > p {
+  opacity: 1;
+  transition-delay: 120ms;
+  padding-bottom: var(--s-4);
+}
+
+/* ---- Note panel -------------------------------------------- */
+.experiments__panel {
+  border-top: 1px solid var(--rule);
+  padding-top: var(--s-5);
+}
+
+.experiments__panel-sticky {
+  display: grid;
+  gap: var(--s-4);
+}
+
+.experiments__panel-index {
+  color: var(--ink-faint);
+}
+
+.experiments__panel-note {
+  color: var(--ink-muted);
+  font-size: var(--t-lead);
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  max-width: 40ch;
+}
+
+.experiments__panel-count {
+  color: var(--ink-faint);
+}
+
+@media (max-width: 899px) {
+  .experiments__panel {
+    display: none;
+  }
+}
+
+@media (min-width: 900px) {
+  .experiments__inline {
+    display: none;
+  }
+
+  .experiments__body {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+    gap: var(--s-9);
+  }
+
+  .experiments__panel {
+    border-top: 0;
+    border-left: 1px solid var(--rule);
+    padding-top: 0;
+    padding-left: var(--s-6);
+  }
+
+  .experiments__panel-sticky {
+    position: sticky;
+    top: calc(var(--nav-h) + var(--s-7));
+  }
+
+  .experiments__word {
+    padding-block: var(--s-4);
+  }
+}
+
+/* Text-stroke is unsupported — fall back to a muted solid colour so the
+   words are never invisible. */
+@supports not (-webkit-text-stroke: 1px black) {
+  .experiments__label {
+    color: var(--ink-faint);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .experiments__label::after {
+    transition: none;
+  }
+}

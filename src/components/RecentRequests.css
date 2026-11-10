@@ -1,0 +1,190 @@
+/* ============================================================
+   Recently Submitted Users — live list, loading, empty, error.
+   ============================================================ */
+
+.recent__body {
+  min-height: 12rem;
+}
+
+.recent__list {
+  border-top: 1px solid var(--rule);
+}
+
+.recent__item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas:
+    'index identity'
+    '.     company'
+    '.     date';
+  align-items: baseline;
+  gap: var(--s-2) var(--s-4);
+  padding-block: var(--s-5);
+  border-bottom: 1px solid var(--rule-faint);
+  transition: background-color var(--dur) var(--ease);
+}
+
+.recent__item:hover {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.028), transparent 62%);
+}
+
+.recent__index {
+  grid-area: index;
+  color: var(--ink-faint);
+}
+
+.recent__identity {
+  grid-area: identity;
+  min-width: 0;
+}
+
+.recent__name {
+  font-size: var(--t-h3);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.recent__email {
+  display: inline-block;
+  margin-top: 0.3rem;
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+  font-size: var(--t-small);
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid transparent;
+  transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+
+.recent__email:hover,
+.recent__email:focus-visible {
+  color: var(--ink);
+  border-bottom-color: var(--rule-strong);
+}
+
+/* Scoped past .mono so a visitor's company name keeps the casing they
+   typed - "McKinsey" must not render as "MCKINSEY". */
+.recent__item .recent__company {
+  grid-area: company;
+  color: var(--ink-muted);
+  text-transform: none;
+  letter-spacing: 0.04em;
+  overflow-wrap: anywhere;
+}
+
+.recent__muted {
+  color: var(--ink-ghost);
+}
+
+.recent__date {
+  grid-area: date;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+
+/* ---- Empty / error ----------------------------------------- */
+.recent__state {
+  display: grid;
+  gap: var(--s-2);
+  justify-items: start;
+  padding: var(--s-7) var(--s-5);
+  border: 1px dashed var(--rule);
+  background: var(--ground-sunken);
+}
+
+.recent__state-title {
+  font-size: var(--t-h3);
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.recent__state-note {
+  color: var(--ink-muted);
+  font-size: var(--t-small);
+  max-width: 46ch;
+}
+
+.recent__state--error {
+  border-style: solid;
+  border-left: 2px solid #e0806e;
+}
+
+.recent__state--error .recent__state-title {
+  color: #e0806e;
+}
+
+.recent__retry {
+  margin-top: var(--s-3);
+}
+
+/* ---- Loading skeleton -------------------------------------- */
+.recent__item--skeleton {
+  pointer-events: none;
+}
+
+.skeleton {
+  display: block;
+  height: 0.75rem;
+  background: linear-gradient(
+    90deg,
+    var(--ink-ghost) 0%,
+    rgba(255, 255, 255, 0.12) 50%,
+    var(--ink-ghost) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeletonSweep 1.4s linear infinite;
+  opacity: 0.5;
+}
+
+.skeleton--index {
+  width: 1.5rem;
+}
+
+.skeleton--name {
+  width: min(58%, 12rem);
+  height: 1.1rem;
+}
+
+.skeleton--email {
+  width: min(72%, 16rem);
+  margin-top: var(--s-3);
+}
+
+.skeleton--company {
+  width: 7rem;
+}
+
+.skeleton--date {
+  width: 9rem;
+}
+
+@keyframes skeletonSweep {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (min-width: 900px) {
+  .recent__item {
+    grid-template-columns: 5.5rem minmax(0, 5fr) minmax(0, 3fr) minmax(0, 3fr);
+    grid-template-areas: 'index identity company date';
+    align-items: center;
+    gap: var(--s-5);
+    padding-block: var(--s-6);
+  }
+
+  .recent__date {
+    justify-self: end;
+    text-align: right;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+}

@@ -1,0 +1,85 @@
+.cap__list {
+  border-top: 1px solid var(--rule);
+}
+
+.cap__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  grid-template-areas:
+    'id name'
+    '. note';
+  gap: var(--s-2) var(--s-4);
+  padding-block: var(--s-5);
+  border-bottom: 1px solid var(--rule-faint);
+  transition: padding-left var(--dur) var(--ease);
+}
+
+/* A rule that draws itself in from the left on hover. */
+.cap__item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  height: 1px;
+  width: 100%;
+  background: var(--ink-faint);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-slow) var(--ease);
+}
+
+.cap__item:hover::before {
+  transform: scaleX(1);
+}
+
+.cap__id {
+  grid-area: id;
+  color: var(--ink-faint);
+  padding-top: 0.35em;
+  transition: color var(--dur) var(--ease);
+}
+
+.cap__item:hover .cap__id {
+  color: var(--ink-muted);
+}
+
+.cap__name {
+  grid-area: name;
+  font-size: var(--t-h3);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  font-weight: 500;
+}
+
+.cap__note {
+  grid-area: note;
+  color: var(--ink-muted);
+  font-size: var(--t-small);
+  line-height: 1.55;
+  max-width: 52ch;
+}
+
+@media (min-width: 900px) {
+  .cap__item {
+    grid-template-columns: 5.5rem minmax(0, 5fr) minmax(0, 6fr);
+    grid-template-areas: 'id name note';
+    align-items: baseline;
+    gap: var(--s-5);
+    padding-block: var(--s-6);
+  }
+
+  .cap__item:hover {
+    padding-left: var(--s-3);
+  }
+
+  .cap__id {
+    padding-top: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cap__item:hover {
+    padding-left: 0;
+  }
+}

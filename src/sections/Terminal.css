@@ -1,0 +1,289 @@
+.term {
+  border: 1px solid var(--rule);
+  background: var(--ground-sunken);
+  cursor: text;
+  transition: border-color var(--dur) var(--ease);
+}
+
+.term.is-focused {
+  border-color: var(--rule-strong);
+}
+
+/* The input's own outline is suppressed so the caret can sit flush, so the
+   window carries the focus indicator for keyboard users instead. */
+.term:has(.term__input:focus-visible) {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* ---- Title bar --------------------------------------------- */
+.term__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  padding: 0.7rem var(--s-4);
+  border-bottom: 1px solid var(--rule);
+  background: var(--ground-raised);
+}
+
+.term__dots {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.term__dots i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid var(--ink-ghost);
+}
+
+.term__title {
+  color: var(--ink-faint);
+  flex: 1;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.term__status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  color: var(--ink-faint);
+  flex-shrink: 0;
+}
+
+.term__led {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow: 0 0 0 3px rgba(155, 224, 122, 0.12);
+  animation: led 3s ease-in-out infinite;
+}
+
+@keyframes led {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* ---- Screen ------------------------------------------------ */
+.term__screen {
+  height: clamp(290px, 42vh, 400px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--s-5) var(--s-4);
+  font-family: var(--font-mono);
+  font-size: clamp(0.75rem, 0.68rem + 0.3vw, 0.8125rem);
+  line-height: 1.85;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ink-ghost) transparent;
+}
+
+.term__screen::-webkit-scrollbar {
+  width: 8px;
+}
+
+.term__screen::-webkit-scrollbar-thumb {
+  background: var(--ink-ghost);
+}
+
+.term__line {
+  white-space: pre-wrap;
+  word-break: break-word;
+  animation: lineIn 260ms var(--ease) both;
+}
+
+@keyframes lineIn {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.term__line--sys {
+  color: var(--ink-faint);
+}
+
+.term__line--out {
+  color: var(--ink);
+}
+
+.term__line--err {
+  color: #e0806e;
+}
+
+.term__line--hint {
+  color: var(--ink-faint);
+  font-style: italic;
+}
+
+.term__line--in {
+  display: flex;
+  gap: var(--s-3);
+  color: var(--ink);
+  margin-top: var(--s-3);
+}
+
+.term__line--kv {
+  display: grid;
+  grid-template-columns: minmax(0, 11ch) minmax(0, 1fr);
+  gap: var(--s-4);
+  color: var(--ink-muted);
+}
+
+.term__key {
+  color: var(--signal);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.term__val {
+  color: var(--ink-muted);
+}
+
+.term__prompt {
+  color: var(--signal-dim);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+/* ---- Input line -------------------------------------------- */
+.term__inputline {
+  display: flex;
+  gap: var(--s-3);
+  align-items: baseline;
+  margin-top: var(--s-3);
+}
+
+.term__field {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+
+.term__mirror {
+  display: block;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--ink);
+  min-height: 1.85em;
+}
+
+.term__caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.05em;
+  translate: 0 0.18em;
+  background: var(--signal);
+  opacity: 0.35;
+}
+
+.term__caret.is-live {
+  animation: caret 1.05s steps(1) infinite;
+  opacity: 1;
+}
+
+@keyframes caret {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* The real input sits invisibly on top of the mirrored text. */
+.term__input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: transparent;
+  caret-color: transparent;
+  outline: none;
+}
+
+.term__input:focus-visible {
+  outline: none;
+}
+
+/* ---- Suggestion chips -------------------------------------- */
+.term__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin-top: var(--s-4);
+}
+
+.term__chip {
+  border: 1px solid var(--rule);
+  padding: 0.4rem 0.75rem;
+  color: var(--ink-muted);
+  transition:
+    color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease),
+    background-color var(--dur-fast) var(--ease);
+}
+
+.term__chip::before {
+  content: '$ ';
+  color: var(--ink-faint);
+}
+
+.term__chip:hover,
+.term__chip:focus-visible {
+  color: var(--ink);
+  border-color: var(--rule-strong);
+  background: var(--ground-raised);
+}
+
+@media (max-width: 600px) {
+  .term__title {
+    display: none;
+  }
+
+  .term__bar {
+    justify-content: space-between;
+  }
+
+  .term__line--kv {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .term__line--kv .term__val {
+    padding-left: var(--s-4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .term__line {
+    animation: none;
+  }
+
+  .term__caret.is-live {
+    animation: none;
+  }
+
+  .term__led {
+    animation: none;
+  }
+}
